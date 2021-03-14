@@ -17,6 +17,7 @@ class Question(models.Model):
     rating = models.IntegerField(default=0)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     likes = models.ManyToManyField(User, related_name='likes_set')
+    objects = QuestionManager()
 
     def __str__(self):
         return self.title

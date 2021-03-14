@@ -7,6 +7,7 @@ sudo pip3 install django==2.0
 
 # устанавливаем зависимости
 sudo pip3 install pathlib
+sudo pip install pathlib
 
 # копируем конфиг nginx в директорию nginx
 sudo cp ~/stepic_web_old_django/nginx.conf /etc/nginx/nginx.conf
