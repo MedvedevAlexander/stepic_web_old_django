@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import os.path
 from pathlib import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -39,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'qa.apps.QaConfig'
+    'qa.apps.QaConfig',
 ]
 
 MIDDLEWARE = [

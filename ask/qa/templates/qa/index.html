@@ -1,0 +1,7 @@
+{% extends 'qa/base.html' %}
+
+  {% block question_block %}
+    {% for question in paginator %}
+    <p> <a href="{% url 'ask:question' question.id  %}"> {{ question.title }} </a></p>
+    {% endfor %}
+  {% endblock %}
