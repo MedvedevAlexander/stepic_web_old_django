@@ -12,7 +12,7 @@ sudo pip3 install pathlib
 sudo cp ~/stepic_web_old_django/nginx.conf /etc/nginx/nginx.conf
 
 # копируем директорию проекта
-sudo cp -R ~/stepic_web_old_django/web ~/web
+sudo cp -R ~/stepic_web_old_django ~/web
 
 # Запускаем nginx
 sudo /etc/init.d/nginx start
@@ -25,4 +25,4 @@ sudo python3 manage.py migrate
 
 # Запускаем backend-сервер
 cd ~/web/ask
-python3 manage.py runserver 127.0.0.1:8000
+python3 manage.py runserver 0:8000
