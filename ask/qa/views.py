@@ -48,6 +48,7 @@ def question(request, *args, **kwargs):
     question = get_object_or_404(Question, pk=question_id)
 
     if request.method == 'POST':
+        #return HttpResponse('200 ok')
         form = AnswerForm(request.POST)
         if form.is_valid():
             answer = form.save()
