@@ -13,13 +13,7 @@ def test(request, *args, **kwargs):
 def index(request, *args, **kwargs):
     questions = Question.objects.new()
     limit = 10
-
-    # check data type
-    try:
-        page_num = int(request.GET['page'])
-    except ValueError:
-        raise Http404
-
+    page_num = request.GET.get('page')
     paginator = Paginator(questions, limit)
 
     # check page range
@@ -38,13 +32,7 @@ def index(request, *args, **kwargs):
 def popular(request, *args, **kwargs):
     questions = Question.objects.popular()
     limit = 10
-
-    # check data type
-    try:
-        page_num = int(request.GET['page'])
-    except ValueError:
-        Http404
-
+    page_num = request.GET.get('page')
     paginator = Paginator(questions, limit)
 
     # check page range
