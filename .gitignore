@@ -4,3 +4,4 @@ ask/ask/__pycache__/
 ask/qa/__pycache__/
 ask/qa/migrations/__pycache__/
 ask/db.sqlite3
+ask/qa/migrations/
