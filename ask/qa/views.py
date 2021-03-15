@@ -16,17 +16,17 @@ def index(request, *args, **kwargs):
 
     # check data type
     try:
-        page = int(request.GET['page'])
+        page_num = int(request.GET['page'])
     except ValueError:
         raise Http404
 
     paginator = Paginator(questions, limit)
 
     # check page range
-    if page > max(paginator.page_range):
+    if page_num > max(paginator.page_range):
         raise Http404
 
-    p = paginator.page(page)
+    p = paginator.get_page(page_num)
     context = {
         'paginator': p
     }
@@ -41,17 +41,17 @@ def popular(request, *args, **kwargs):
 
     # check data type
     try:
-        page = int(request.GET['page'])
+        page_num = int(request.GET['page'])
     except ValueError:
         Http404
 
     paginator = Paginator(questions, limit)
 
     # check page range
-    if page > max(paginator.page_range):
+    if page_num > max(paginator.page_range):
         raise Http404
 
-    p = paginator.page(page)
+    p = paginator.get_page(page_num)
     context = {
         'paginator': p
     }
