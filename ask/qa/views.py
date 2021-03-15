@@ -50,11 +50,10 @@ def question(request, *args, **kwargs):
     if request.method == 'POST':
         form = AnswerForm(request.POST)
         if form.is_valid():
-            answer = form.save(question)
-            url = reverse('ask:question', args=[question_id])
-            return HttpResponseRedirect(url)
+            answer = form.save()
+            return reverse('ask:question', args=[question.pk])
     else:
-        form = AnswerForm()
+        form = AnswerForm(initial={'question': question.pk})
 
     context = {
         'question': question,

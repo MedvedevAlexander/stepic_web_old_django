@@ -21,8 +21,9 @@ class AnswerForm(forms.Form):
     text = forms.CharField(widget=forms.Textarea)
     question = forms.IntegerField(required=False)
 
-    def save(self, question):
-        answer = Answer(text=self.cleaned_data['text'], question=question)
+    def save(self):
+        question_obj = Question.objects.get(pk=self.cleaned_data['question'])
+        answer = Answer(text=self.cleaned_data['text'], question=question_obj)
         answer.save()
 
         return answer

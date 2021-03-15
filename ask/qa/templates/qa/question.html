@@ -30,6 +30,9 @@
             <div class="text_field">
                 {{form.label}}{{ form.text }}
             </div>
+            <div class="question_number">
+                {{ form.question.as_hidden}}
+            </div>
         </div>
         <div class="button">
             <button type="submit"> Отправить ответ </button>
