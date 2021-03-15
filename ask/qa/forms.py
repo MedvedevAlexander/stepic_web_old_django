@@ -19,7 +19,7 @@ class AskForm(forms.Form):
 class AnswerForm(forms.Form):
 
     text = forms.CharField(widget=forms.Textarea)
-    question = forms.CharField(max_length=100, required=False)
+    question = forms.IntegerField(required=False)
 
     def save(self, question):
         answer = Answer(text=self.cleaned_data['text'], question=question)
