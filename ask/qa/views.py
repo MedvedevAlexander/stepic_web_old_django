@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.views.decorators.http import require_GET
-from .models import Question
+from .models import Question, Answer
+from .forms import AskForm, AnswerForm
 from django.core.paginator import Paginator
+from django.urls import reverse
 
 
 def test(request, *args, **kwargs):
@@ -15,11 +17,6 @@ def index(request, *args, **kwargs):
     limit = 10
     page_num = request.GET.get('page')
     paginator = Paginator(questions, limit)
-
-    # check page range
-    if page_num > max(paginator.page_range):
-        raise Http404
-
     p = paginator.get_page(page_num)
     context = {
         'paginator': p
@@ -34,11 +31,6 @@ def popular(request, *args, **kwargs):
     limit = 10
     page_num = request.GET.get('page')
     paginator = Paginator(questions, limit)
-
-    # check page range
-    if page_num > max(paginator.page_range):
-        raise Http404
-
     p = paginator.get_page(page_num)
     context = {
         'paginator': p
@@ -55,8 +47,34 @@ def question(request, *args, **kwargs):
         raise Http404
     question = get_object_or_404(Question, pk=question_id)
 
+    if request.method == 'POST':
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save(question)
+            url = reverse('ask:question', args=[question_id])
+            return HttpResponseRedirect(url)
+    else:
+        form = AnswerForm()
+
     context = {
-        'question': question
+        'question': question,
+        'form': form
     }
 
     return render(request, 'qa/question.html', context)
+
+
+def ask(request, *args, **kwargs):
+    if request.method == 'POST':
+        form = AskForm(request.POST)
+        if form.is_valid():
+            question = form.save()
+            url = reverse('ask:question', args=[question.pk])
+            return HttpResponseRedirect(url)
+    else:
+        form = AskForm()
+
+    context = {
+        'form': form
+    }
+    return render(request, 'qa/ask.html', context)
