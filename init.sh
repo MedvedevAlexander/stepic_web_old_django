@@ -24,6 +24,10 @@ cd ~/web/ask
 sudo python3 manage.py makemigrations
 sudo python3 manage.py migrate
 
+# задаем права на файлы
+cd ~
+sudo chmod -R a+rw .
+
 # Запускаем backend-сервер
 cd ~/web/ask
 python3 manage.py runserver 0:8000
