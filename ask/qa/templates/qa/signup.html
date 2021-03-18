@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup to Question and Answer project</title>
+</head>
+<body>
+<div class="non_field_errors_list">
+    {% for e in form.non_field_errors %}
+        <div class="non_field_error">
+            {{ e }}
+        </div>
+    {% endfor %}
+    <form class="signup_form" method="post" action="">
+        {% csrf_token %}
+        <fieldset>
+            {% for field in form %}
+                <div class="field_error">
+                    {% if field.errors %}
+                        {{ field.errors }}
+                    {% endif %}
+                </div>
+                <div class="signup_field">
+                    {{ field.label }} {{ field }}
+                </div>
+            {% endfor %}
+        </fieldset>
+        <dic class="form_actions">
+            <button type="submit"> Signup </button>
+        </dic>
+    </form>
+</div>
+</body>
+</html>

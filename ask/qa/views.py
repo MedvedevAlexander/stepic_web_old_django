@@ -2,9 +2,11 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.views.decorators.http import require_GET
 from .models import Question, Answer
-from .forms import AskForm, AnswerForm
+from .forms import AskForm, AnswerForm, SignupForm
 from django.core.paginator import Paginator
 from django.urls import reverse
+from django.contrib.auth.models import User
+from django.contrib.auth import login
 
 
 def test(request, *args, **kwargs):
@@ -51,6 +53,7 @@ def question(request, *args, **kwargs):
         #return HttpResponse('200 ok')
         form = AnswerForm(request.POST)
         if form.is_valid():
+            form._user = request.user
             answer = form.save()
             url = reverse('ask:question', args=[question_id])
             return HttpResponseRedirect(url)
@@ -69,6 +72,7 @@ def ask(request, *args, **kwargs):
     if request.method == 'POST':
         form = AskForm(request.POST)
         if form.is_valid():
+            form._user = request.user
             question = form.save()
             url = reverse('ask:question', args=[question.pk])
             return HttpResponseRedirect(url)
@@ -79,3 +83,22 @@ def ask(request, *args, **kwargs):
         'form': form
     }
     return render(request, 'qa/ask.html', context)
+
+
+def signup(request, *args, **kwargs):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(request.POST.get('username'), request.POST.get('email'),
+                                            request.POST.get('password'))
+            login(request, user)
+            url = reverse('ask:main_page')
+
+            return HttpResponseRedirect(url)
+    else:
+        form = SignupForm()
+
+    context = {
+        'form': form
+    }
+    return render(request, 'qa/signup.html', context)
